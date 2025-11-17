@@ -366,148 +366,175 @@
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- Left Panel -->
-        <div class="left-panel">
-            <div class="welcome-content">
-                <h1>Join the</h1>
-                <h2>Innovation</h2>
-                <p style="font-size: 18px; margin-top: 20px; margin-bottom: 30px;">Register now for CHRIS TECH 2026 and be part of something extraordinary!</p>
-                
-                <div class="features">
-                    <div class="feature-item">Participate in exciting events</div>
-                    <div class="feature-item">Network with innovators</div>
-                    <div class="feature-item">Compete for amazing prizes</div>
-                    <div class="feature-item">Experience cutting-edge technology</div>
-                </div>
-            </div>
-        </div>
+<div class="main-container">
 
-        <!-- Right Panel - Form -->
-        <div class="right-panel">
-            <div class="form-header">
-                <h2>EVENT REGISTRATION</h2>
-                <h3>CHRIS TECH 2026</h3>
-                <p>Fill in your details to register for the event. We're excited to have you join us!</p>
-            </div>
+    <!-- LEFT -->
+    <div class="left-panel">
+        <div class="welcome-content">
+            <h1>Join the</h1>
+            <h2>Innovation</h2>
+            <p>Register now for CHRIS TECH 2026 and be part of something extraordinary!</p>
 
-            <form id="eventForm">
-                <div class="form-group">
-                    <label for="full_name">Full Name <span class="required">*</span></label>
-                    <input type="text" id="full_name" name="full_name" required placeholder="Enter your full name">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email address">
-                    <div class="info-text">We'll send confirmation details to this email</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="contact">Contact Number <span class="required">*</span></label>
-                    <input type="text" id="contact" name="contact" required placeholder="Enter your contact number">
-                    <div class="info-text">Enter 10-digit mobile number</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="college">College/School Name <span class="required">*</span></label>
-                    <input type="text" id="college" name="college" required placeholder="Enter your college or school name">
-                </div>
-
-                <div class="section-divider">
-                    <h3 class="section-title">📅 Event Details</h3>
-                </div>
-
-                <div class="form-group">
-                    <label for="event_name">Event Name</label>
-                    <input type="text" id="event_name" name="event_name" value="Tech Talk 2025" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="event_location">Event Location</label>
-                    <input type="text" id="event_location" name="event_location" value="Christ Nagar College" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="event_date">Event Date</label>
-                    <input type="text" id="event_date" name="event_date" value="2025-11-25" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="event_time">Event Time</label>
-                    <input type="text" id="event_time" name="event_time" value="10:00 AM" readonly>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">Register Now</button>
-
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 10px; color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);">Submitting your registration...</p>
-                </div>
-
-                <div class="message" id="message"></div>
-            </form>
+            <div class="feature-item">Participate in exciting events</div>
+            <div class="feature-item">Network with innovators</div>
+            <div class="feature-item">Compete for amazing prizes</div>
+            <div class="feature-item">Experience cutting-edge technology</div>
         </div>
     </div>
 
-    <script>
-        const form = document.getElementById('eventForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const loading = document.getElementById('loading');
-        const message = document.getElementById('message');
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+        <div class="form-header" style="text-align:center;color:white;margin-bottom:30px;">
+            <h2>EVENT REGISTRATION</h2>
+            <h3 style="color:#00ffff;">CHRIS TECH 2026</h3>
+        </div>
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        <form id="eventForm">
 
-            // Show loading
-            submitBtn.disabled = true;
-            loading.classList.add('active');
-            message.classList.remove('active');
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+            </div>
 
-            const formData = Object.fromEntries(new FormData(this).entries());
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
 
-            const scriptURL = "https://script.google.com/macros/s/AKfycbxeEqoD3NEYs5TsoU0DhwLJKUQmGE7atQmkSAKHloboAsZOxPpjephXkLpfXJNx1EKshw/exec";
+            <div class="form-group">
+                <label>Contact Number *</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter your contact number" required>
+            </div>
 
-            try {
-                const response = await fetch(scriptURL, {
-                    method: "POST",
-                    body: JSON.stringify(formData)
-                });
+            <div class="form-group">
+                <label>College / School *</label>
+                <input type="text" id="college" name="college" placeholder="Enter your college/school" required>
+            </div>
 
-                const result = await response.json();
+            <hr style="margin:30px 0; border-color:rgba(0,255,255,0.2);">
 
-                if(result.result === "success") {
-                    showMessage("Thank you! Your event registration has been submitted successfully. We will contact you soon.", "success");
-                    form.reset();
-                    // Restore readonly values
-                    document.getElementById('event_name').value = "Mind Quest";
-document.getElementById('event_location').value = "Room 14";
-document.getElementById('event_date').value = "29-01-2026";
-document.getElementById('event_time').value = "10:00 am";
-                } else {
-                    showMessage("Submission failed. Please try again.", "error");
-                }
-            } catch (error) {
-                console.error("Submission Error:", error);
-                showMessage("Registration submitted! If you don't receive confirmation, please contact us.", "success");
-                form.reset();
-                document.getElementById('event_name').value = "Mind Quest";
-document.getElementById('event_location').value = "Room 14";
-document.getElementById('event_date').value = "29-01-2026";
-document.getElementById('event_time').value = "10:00 am";
-            } finally {
-                submitBtn.disabled = false;
-                loading.classList.remove('active');
+            <div class="form-group">
+                <label>Event Name</label>
+                <input type="text" id="event_name" name="event_name" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Event Location</label>
+                <input type="text" id="event_location" name="event_location" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Event Date</label>
+                <input type="text" id="event_date" name="event_date" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Event Time</label>
+                <input type="text" id="event_time" name="event_time" readonly>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Register Now</button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="color:#00ffff; margin-top:10px;">Submitting...</p>
+            </div>
+
+            <div class="message" id="message"></div>
+
+        </form>
+    </div>
+</div>
+
+
+<!-- ========================= JS SECTION ========================= -->
+<script>
+
+    /* ---------------------------------------------------------
+       🔥 CHANGE ONLY HERE FOR EVERY EVENT PAGE (1 place only)
+    --------------------------------------------------------- */
+    const EVENT_DETAILS = {
+    name: "Mind Quest",
+    location: "Room B4",
+    date: "29-01-2026",
+    time: "10:00 am"
+};
+
+
+
+    /* ---------------------------------------------------------
+       Auto fill event details + placeholders
+    --------------------------------------------------------- */
+    function fillEventDetails() {
+        document.getElementById("event_name").value = EVENT_DETAILS.name;
+        document.getElementById("event_location").value = EVENT_DETAILS.location;
+        document.getElementById("event_date").value = EVENT_DETAILS.date;
+        document.getElementById("event_time").value = EVENT_DETAILS.time;
+
+        // placeholders also updated
+        document.getElementById("event_name").placeholder = EVENT_DETAILS.name;
+        document.getElementById("event_location").placeholder = EVENT_DETAILS.location;
+        document.getElementById("event_date").placeholder = EVENT_DETAILS.date;
+        document.getElementById("event_time").placeholder = EVENT_DETAILS.time;
+    }
+
+    window.onload = fillEventDetails;
+
+
+    /* ---------------------------------------------------------
+       Form Submit Handler
+    --------------------------------------------------------- */
+    const form = document.getElementById("eventForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const loading = document.getElementById("loading");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        loading.classList.add("active");
+        message.classList.remove("active");
+
+        const formData = Object.fromEntries(new FormData(form).entries());
+
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxeEqoD3NEYs5TsoU0DhwLJKUQmGE7atQmkSAKHloboAsZOxPpjephXkLpfXJNx1EKshw/exec";
+
+        try {
+            const res = await fetch(scriptURL, {
+                method: "POST",
+                body: JSON.stringify(formData),
+            });
+
+            const result = await res.json();
+
+            if (result.result === "success") {
+                showMessage("Registration successful! We'll contact you soon.", "success");
+            } else {
+                showMessage("Submission failed. Try again.", "error");
             }
-        });
-
-        function showMessage(text, type) {
-            message.textContent = text;
-            message.className = 'message ' + type + ' active';
-            setTimeout(() => {
-                message.classList.remove('active');
-            }, 6000);
+        } catch (err) {
+            showMessage("Submitted! If no mail received, contact event team.", "success");
         }
-    </script>
+
+        form.reset();
+        fillEventDetails(); // restore event details automatically
+
+        submitBtn.disabled = false;
+        loading.classList.remove("active");
+    });
+
+
+    /* ---------------------------------------------------------
+       Show Message
+    --------------------------------------------------------- */
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "message active " + type;
+        setTimeout(() => message.classList.remove("active"), 6000);
+    }
+
+</script>
+
 </body>
 </html>
