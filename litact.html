@@ -117,6 +117,10 @@
             color: #b8e6ff;
         }
 
+        .features {
+            margin-top: 40px;
+        }
+
         .feature-item {
             font-size: 17px;
             margin: 15px 0;
@@ -160,6 +164,12 @@
             text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
         }
 
+        .form-header p {
+            color: #8ab4d5;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         .form-group {
             margin-bottom: 25px;
         }
@@ -172,9 +182,13 @@
             font-size: 14px;
         }
 
+        label .required {
+            color: #00ffff;
+            margin-left: 3px;
+        }
+
         input[type="text"],
-        input[type="email"],
-        select {
+        input[type="email"] {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid rgba(0, 255, 255, 0.2);
@@ -184,23 +198,6 @@
             font-family: inherit;
             background: rgba(15, 25, 45, 0.8);
             color: #ffffff;
-        }
-
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-color: rgba(15, 25, 45, 0.8);
-            padding-right: 40px;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-            background-color: rgba(15, 25, 45, 0.95);
         }
 
         input[readonly] {
@@ -302,6 +299,27 @@
             display: block;
         }
 
+        .info-text {
+            font-size: 12px;
+            color: #6a9ec2;
+            margin-top: 5px;
+        }
+
+        .section-divider {
+            border-top: 2px solid rgba(0, 255, 255, 0.2);
+            margin: 30px 0;
+            padding-top: 30px;
+        }
+
+        .section-title {
+            color: #00ffff;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            text-align: center;
+        }
+
         @media (max-width: 968px) {
             .main-container {
                 flex-direction: column;
@@ -350,7 +368,7 @@
 <body>
 <div class="main-container">
 
-    <!-- LEFT PANEL -->
+    <!-- LEFT -->
     <div class="left-panel">
         <div class="welcome-content">
             <h1>Join the</h1>
@@ -366,24 +384,12 @@
 
     <!-- RIGHT PANEL -->
     <div class="right-panel">
-        <div class="form-header">
+        <div class="form-header" style="text-align:center;color:white;margin-bottom:30px;">
             <h2>EVENT REGISTRATION</h2>
-            <h3>CHRIS TECH 2026</h3>
+            <h3 style="color:#00ffff;">CHRIS TECH 2026</h3>
         </div>
 
         <form id="eventForm">
-
-            <!-- TIME SLOT SELECTION - MOVED TO TOP -->
-            <div class="form-group">
-                <label>Select Time Slot *</label>
-                <select id="event_time" name="event_time" required>
-                    <option value="">Choose your preferred time slot</option>
-                    <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-                    <option value="1:00 PM - 2:30 PM">1:00 PM - 2:30 PM</option>
-                </select>
-            </div>
-
-            <hr style="margin:30px 0; border-color:rgba(0,255,255,0.2);">
 
             <div class="form-group">
                 <label>Full Name *</label>
@@ -422,6 +428,11 @@
                 <input type="text" id="event_date" name="event_date" readonly>
             </div>
 
+            <div class="form-group">
+                <label>Event Time</label>
+                <input type="text" id="event_time" name="event_time" readonly>
+            </div>
+
             <button type="submit" class="submit-btn" id="submitBtn">Register Now</button>
 
             <div class="loading" id="loading">
@@ -436,31 +447,36 @@
 </div>
 
 
-<!-- ========================= JAVASCRIPT SECTION ========================= -->
+<!-- ========================= JS SECTION ========================= -->
 <script>
 
     /* ---------------------------------------------------------
        🔥 CHANGE ONLY HERE FOR EVERY EVENT PAGE (1 place only)
-       --------------------------------------------------------- */
-    const EVENT_DETAILS = {
+    --------------------------------------------------------- */
+  
+ const EVENT_DETAILS = {
         name: "Litact",
         location: "Room 17",
-        date: "29-01-2026"
+        date: "31-01-2026",
+        time: "10:00 am"
     };
+
 
 
     /* ---------------------------------------------------------
        Auto fill event details + placeholders
-       --------------------------------------------------------- */
+    --------------------------------------------------------- */
     function fillEventDetails() {
         document.getElementById("event_name").value = EVENT_DETAILS.name;
         document.getElementById("event_location").value = EVENT_DETAILS.location;
         document.getElementById("event_date").value = EVENT_DETAILS.date;
+        document.getElementById("event_time").value = EVENT_DETAILS.time;
 
         // placeholders also updated
         document.getElementById("event_name").placeholder = EVENT_DETAILS.name;
         document.getElementById("event_location").placeholder = EVENT_DETAILS.location;
         document.getElementById("event_date").placeholder = EVENT_DETAILS.date;
+        document.getElementById("event_time").placeholder = EVENT_DETAILS.time;
     }
 
     window.onload = fillEventDetails;
@@ -468,7 +484,7 @@
 
     /* ---------------------------------------------------------
        Form Submit Handler
-       --------------------------------------------------------- */
+    --------------------------------------------------------- */
     const form = document.getElementById("eventForm");
     const submitBtn = document.getElementById("submitBtn");
     const loading = document.getElementById("loading");
@@ -512,7 +528,7 @@
 
     /* ---------------------------------------------------------
        Show Message
-       --------------------------------------------------------- */
+    --------------------------------------------------------- */
     function showMessage(text, type) {
         message.textContent = text;
         message.className = "message active " + type;
@@ -522,4 +538,5 @@
 </script>
 
 </body>
+
 </html>
